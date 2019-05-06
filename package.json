@@ -1,6 +1,6 @@
 {
   "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate app",
+  "productName": "ElectronBoilerplate",
   "version": "1.0.0",
   "description": "Electron@5, React@16, MobX@5, Babel@7 boilerplate",
   "main": "app/main.js",
@@ -12,9 +12,11 @@
     "build:renderer": "webpack --mode development --env.dev --watch",
     "build:mac": "electron-packager . --platform=darwin --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.icns --asar --app-bundle-id=\"com.example.electron\" --app-version=\"1.0.0\" --build-version=\"1.0.100\"",
     "build:linux": "electron-packager . electron-boilerplate --platform=linux --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.png --asar",
-    "build:win": "electron-packager . --platform=win32 --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.ico --asar",
+    "build:win": "electron-packager . --platform=win32 --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.ico --asar --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ElectronBoilerplate\"",
+    "build:win32": "electron-packager . --platform=win32 --prune=true --arch=ia32 --out=build --overwrite --icon=icons/icon.ico --asar --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ElectronBoilerplate\"",
     "package:mac": "electron-installer-dmg ./build/editor-darwin-x64/editor.app Vision --out=./build --debug --overwrite --icon=icons/icon.icns",
-    "package:linux": "electron-installer-debian --src build/electron-boilerplate-linux-x64/ --arch amd64 --config debian.json"
+    "package:linux": "electron-installer-debian --src build/electron-boilerplate-linux-x64/ --arch amd64 --config debian.json --dest ./build --icon icons/icons/1024x1024.png",
+    "package:win": "electron-installer-windows --src build/ElectronBoilerplate-win32-x64 --exe ElectronBoilerplate.exe --dest ./build --icon icons/icon.ico --config windows.json"
   },
   "keywords": [],
   "author": "'Igor Kling' <“klingiv@altarix.ru”>",
@@ -45,9 +47,11 @@
     "electron": "^5.0.1",
     "electron-installer-debian": "^1.2.0",
     "electron-installer-dmg": "^2.0.0",
+    "electron-installer-windows": "^1.1.1",
     "electron-osx-sign": "^0.4.11",
     "electron-packager": "^13.1.1",
     "electron-rebuild": "^1.8.4",
+    "electron-winstaller": "^3.0.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^0.23.1",

@@ -1,5 +1,12 @@
+import setupEvents from './setupEvents'
 import { app } from 'electron'
 import WM from './window-manager'
+import { exists } from 'fs'
+
+if (setupEvents.handleSquirrelEvent()) {
+  // squirrel event handled and app will exit in 1000ms, so don't do anything else
+  process.exit(0)
+}
 
 const onFocus = hash => {
   const win = WM.getWindow(hash)
