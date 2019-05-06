@@ -1,12 +1,12 @@
-import { observable, action, computed, transaction, toJS, set } from "mobx";
+import { observable, action, computed, transaction, toJS, set } from 'mobx'
 
 class Store {
-  @observable value = "";
+  @observable value = ''
 
   @action.bound
   setValue(value) {
-    this.value = value;
+    this.value = value
   }
 }
 
-export default new Store();
+export default new Store()

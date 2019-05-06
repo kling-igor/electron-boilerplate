@@ -1,10 +1,10 @@
-import { join } from "path";
-import * as URL from "url";
-import { BrowserWindow } from "electron";
-const uuidv4 = require("uuid/v4");
+import { join } from 'path'
+import * as URL from 'url'
+import { BrowserWindow } from 'electron'
+const uuidv4 = require('uuid/v4')
 
 class WindowManager {
-  windows = {};
+  windows = {}
 
   /**
    *
@@ -15,23 +15,10 @@ class WindowManager {
    * @param {Boolean} devTools - нужно ли показывать инструменты разработчика
    * @returns {String} - unique handler
    */
-  openWindow(
-    url,
-    options = {},
-    onShowReady = f => f,
-    onFocus = f => f,
-    onBlur = f => f,
-    devTools = false
-  ) {
-    const hash = uuidv4().replace(/-/g, "");
+  openWindow(url, options = {}, onShowReady = f => f, onFocus = f => f, onBlur = f => f, devTools = false) {
+    const hash = uuidv4().replace(/-/g, '')
 
-    const {
-      width = 1280,
-      height = 800,
-      backgroundColor,
-      titleBarStyle = null,
-      frame = false
-    } = options;
+    const { width = 1280, height = 800, backgroundColor, titleBarStyle = null, frame = false } = options
 
     const window = new BrowserWindow({
       titleBarStyle,
@@ -40,53 +27,51 @@ class WindowManager {
       height,
       backgroundColor,
       show: false,
-      icon:
-        process.platform === "linux" &&
-        join(__dirname, "assets", "icons", "png", "64x64.png"),
+      icon: process.platform === 'linux' && join(__dirname, 'assets', 'icons', 'png', '64x64.png'),
       ...options
-    });
+    })
 
     if (devTools) {
-      window.webContents.openDevTools();
+      window.webContents.openDevTools()
     }
 
-    this.windows[hash] = window;
+    this.windows[hash] = window
 
     window.loadURL(
       URL.format({
         pathname: join(__dirname, url),
-        protocol: "file",
+        protocol: 'file',
         slashes: true,
         hash
       })
-    );
+    )
 
-    window.once("ready-to-show", () => {
-      window.show();
-      onShowReady();
-    });
+    window.once('ready-to-show', () => {
+      window.show()
+      onShowReady()
+    })
 
-    window.on("closed", () => {
-      window.removeAllListeners();
-      delete this.windows[hash];
-    });
+    window.on('closed', () => {
+      window.removeAllListeners()
+      delete this.windows[hash]
+    })
 
-    window.on("blur", onBlur);
+    window.on('blur', onBlur)
 
-    window.on("focus", onFocus);
+    window.on('focus', onFocus)
 
-    return hash;
+    return hash
   }
 
   get focusedWindow() {
-    return BrowserWindow.getFocusedWindow();
+    return BrowserWindow.getFocusedWindow()
   }
 
   getWindow(hash) {
     if (this.windows.hasOwnProperty(hash)) {
-      return this.windows[hash];
+      return this.windows[hash]
     }
   }
 }
 
-export default new WindowManager();
+export default new WindowManager()
