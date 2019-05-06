@@ -1,5 +1,6 @@
 {
   "name": "electron-boilerplate",
+  "productName": "Electron Boilerplate app",
   "version": "1.0.0",
   "description": "Electron@5, React@16, MobX@5, Babel@7 boilerplate",
   "main": "app/main.js",
@@ -10,9 +11,10 @@
     "renderer": "webpack-dev-server --mode development --env.dev --hot",
     "build:renderer": "webpack --mode development --env.dev --watch",
     "build:mac": "electron-packager . --platform=darwin --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.icns --asar --app-bundle-id=\"com.example.electron\" --app-version=\"1.0.0\" --build-version=\"1.0.100\"",
-    "build:linux": "electron-packager . --platform=linux --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.png --asar",
+    "build:linux": "electron-packager . electron-boilerplate --platform=linux --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.png --asar",
     "build:win": "electron-packager . --platform=win32 --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.ico --asar",
-    "package:mac": "electron-installer-dmg ./build/editor-darwin-x64/editor.app Vision --out=./build --debug --overwrite --icon=icons/icon.icns"
+    "package:mac": "electron-installer-dmg ./build/editor-darwin-x64/editor.app Vision --out=./build --debug --overwrite --icon=icons/icon.icns",
+    "package:linux": "electron-installer-debian --src build/electron-boilerplate-linux-x64/ --arch amd64 --config debian.json"
   },
   "keywords": [],
   "author": "'Igor Kling' <“klingiv@altarix.ru”>",
@@ -41,6 +43,7 @@
     "core-js": "^3.0.1",
     "css-loader": "^2.1.0",
     "electron": "^5.0.1",
+    "electron-installer-debian": "^1.2.0",
     "electron-installer-dmg": "^2.0.0",
     "electron-osx-sign": "^0.4.11",
     "electron-packager": "^13.1.1",

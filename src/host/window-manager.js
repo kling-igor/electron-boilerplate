@@ -18,16 +18,14 @@ class WindowManager {
   openWindow(url, options = {}, onShowReady = f => f, onFocus = f => f, onBlur = f => f, devTools = false) {
     const hash = uuidv4().replace(/-/g, '')
 
-    const { width = 1280, height = 800, backgroundColor, titleBarStyle = null, frame = false } = options
+    const { width = 1280, height = 800, backgroundColor } = options
 
     const window = new BrowserWindow({
-      titleBarStyle,
-      frame,
       width,
       height,
       backgroundColor,
       show: false,
-      icon: process.platform === 'linux' && join(__dirname, 'assets', 'icons', 'png', '64x64.png'),
+      icon: process.platform === 'linux' && join(__dirname, 'icons', 'icons', '64x64.png'),
       ...options
     })
 
