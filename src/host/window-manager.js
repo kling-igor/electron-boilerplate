@@ -73,10 +73,6 @@ class WindowManager {
     }
   }
 
-  isNormal(win) {
-    return !win.isMaximized() && !win.isMinimized() && !win.isFullScreen()
-  }
-
   getWindowState(win) {
     if (!win) {
       return
@@ -99,7 +95,7 @@ class WindowManager {
 
   isWindowVisible(win) {
     if (!win) {
-      return
+      return false
     }
 
     return screen.getAllDisplays().some(display => this.isWindowInBounds(win, display.bounds))

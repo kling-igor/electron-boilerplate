@@ -30,20 +30,22 @@ const updateState = win => {
 app.on('ready', () => {
   const displays = screen.getAllDisplays()
 
-  displays.forEach(display => console.log(display.workArea))
-
   const hasExternalDisplay = displays.find(display => {
     return display.bounds.x !== 0 || display.bounds.y !== 0
   })
 
   config = new SettingsFile('settings')
-  // config.set('displayBounds', screen.getPrimaryDisplay().bounds)
 
   const windowBounds = config.get('window')
 
+  // если окно было на другом экране и он был потом отключен
   if (!hasExternalDisplay && (windowBounds.x < 0 || windowBounds.y < 0)) {
-    windowBounds.x = 0
-    windowBounds.y = 0
+    const firstDisplay = screen.getAllDisplays()[0]
+    if (firstDisplay) {
+      const displayBounds = firstDisplay.bounds()
+      windowBounds.x = displayBounds.x
+      windowBounds.y = displayBounds.y
+    }
   }
 
   const hash = WM.openWindow(
@@ -115,24 +117,24 @@ app.on('ready', () => {
   win.on('close', throttledStateSave)
   win.once('closed', unsubscribeWinEvent)
 
-  win.once('maximize', () => {
-    console.log('maximize')
-  })
-  win.once('unmaximize', () => {
-    console.log('unmaximize')
-  })
-  win.once('minimize', () => {
-    console.log('minimize')
-  })
-  win.once('restore', () => {
-    console.log('restore')
-  })
-  win.once('enter-full-screen', () => {
-    console.log('enter-full-screen')
-  })
-  win.once('leave-full-screen', () => {
-    console.log('leave-full-screen')
-  })
+  // win.once('maximize', () => {
+  //   console.log('maximize')
+  // })
+  // win.once('unmaximize', () => {
+  //   console.log('unmaximize')
+  // })
+  // win.once('minimize', () => {
+  //   console.log('minimize')
+  // })
+  // win.once('restore', () => {
+  //   console.log('restore')
+  // })
+  // win.once('enter-full-screen', () => {
+  //   console.log('enter-full-screen')
+  // })
+  // win.once('leave-full-screen', () => {
+  //   console.log('leave-full-screen')
+  // })
 })
 
 app.on('window-all-closed', () => {

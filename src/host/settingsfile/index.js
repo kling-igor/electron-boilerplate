@@ -15,8 +15,7 @@ export default class SettingsFile {
       height: 768,
       isMaximized: false,
       isFullScreen: false
-    },
-    displayBounds: screen.getPrimaryDisplay().bounds
+    }
   }
 
   filePath
@@ -26,7 +25,6 @@ export default class SettingsFile {
     // app.getPath('userData') will return a string of the user's app data directory path.
     const userDataPath = (app || remote.app).getPath('userData')
     this.filePath = path.join(userDataPath, configName + '.json')
-    console.log(this.filePath)
     try {
       const state = jsonfile.readFileSync(this.filePath)
 
