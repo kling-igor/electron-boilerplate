@@ -1,6 +1,6 @@
 import { join } from 'path'
 import * as URL from 'url'
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, screen } from 'electron'
 const uuidv4 = require('uuid/v4')
 
 class WindowManager {
@@ -18,9 +18,11 @@ class WindowManager {
   openWindow(url, options = {}, onShowReady = f => f, onFocus = f => f, onBlur = f => f, devTools = false) {
     const hash = uuidv4().replace(/-/g, '')
 
-    const { width = 1280, height = 800, backgroundColor } = options
+    const { x = 0, y = 0, width = 1280, height = 800, backgroundColor } = options
 
     const window = new BrowserWindow({
+      x,
+      y,
       width,
       height,
       backgroundColor,
@@ -69,6 +71,52 @@ class WindowManager {
     if (this.windows.hasOwnProperty(hash)) {
       return this.windows[hash]
     }
+  }
+
+  isNormal(win) {
+    return !win.isMaximized() && !win.isMinimized() && !win.isFullScreen()
+  }
+
+  getWindowState(win) {
+    if (!win) {
+      return
+    }
+
+    try {
+      const winBounds = win.getBounds()
+      return {
+        x: winBounds.x,
+        y: winBounds.y,
+        width: winBounds.width,
+        height: winBounds.height,
+        isMaximized: win.isMaximized(),
+        isFullScreen: win.isFullScreen()
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  isWindowVisible(win) {
+    if (!win) {
+      return
+    }
+
+    return screen.getAllDisplays().some(display => this.isWindowInBounds(win, display.bounds))
+  }
+
+  isWindowInBounds(win, bounds) {
+    if (!win) {
+      return false
+    }
+
+    const winBounds = win.getBounds()
+    return (
+      winBounds.x >= bounds.x &&
+      winBounds.y >= bounds.y &&
+      winBounds.x + winBounds.width <= bounds.x + bounds.width &&
+      winBounds.y + winBounds.height <= bounds.y + bounds.height
+    )
   }
 }
 

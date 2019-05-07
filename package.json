@@ -14,7 +14,7 @@
     "build:linux": "electron-packager . electron-boilerplate --platform=linux --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.png --asar",
     "build:win": "electron-packager . --platform=win32 --prune=true --arch=x64 --out=build --overwrite --icon=icons/icon.ico --asar --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ElectronBoilerplate\"",
     "build:win32": "electron-packager . --platform=win32 --prune=true --arch=ia32 --out=build --overwrite --icon=icons/icon.ico --asar --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ElectronBoilerplate\"",
-    "package:mac": "electron-installer-dmg ./build/editor-darwin-x64/editor.app Vision --out=./build --debug --overwrite --icon=icons/icon.icns",
+    "package:mac": "electron-installer-dmg ./build/ElectronBoilerplate-darwin-x64/ElectronBoilerplate.app ElectronBoilerplate --out=./build --debug --overwrite --icon=icons/icon.icns",
     "package:linux": "electron-installer-debian --src build/electron-boilerplate-linux-x64/ --arch amd64 --config debian.json --dest ./build --icon icons/icons/1024x1024.png",
     "package:win": "electron-installer-windows --src build/ElectronBoilerplate-win32-x64 --exe ElectronBoilerplate.exe --dest ./build --icon icons/icon.ico --config windows.json"
   },
@@ -23,8 +23,11 @@
   "private": true,
   "license": "ISC",
   "dependencies": {
+    "dot-prop": "^5.0.0",
+    "lodash": "^4.17.11",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
+    "path": "^0.12.7",
     "react": "16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^4.1.3",
@@ -54,6 +57,7 @@
     "electron-winstaller": "^3.0.4",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^3.2.0",
+    "jsonfile": "^5.0.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
